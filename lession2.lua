@@ -102,11 +102,19 @@ func3(tab3, function (k,v)
 end)
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
--- table表，通过构造表达式来完成，创建一个空表{}, 它是一个关联数组，下标可以是数字，字符串
+-- table表，通过构造表达式来完成，创建一个空表{}, 它可以认为是一个关联数组，下标可以是数字，字符串
 -- 开始下标是1
 -- 长度可变，未初始化为nil
+-- lua也是通过table来解决模块，包，对象的。
+-- table表数据存储在堆上，它是一个引用类型。
+-- table套table {'age',{}, 'name'}
+
 local tb = {}
 print(type(tb))
+
+tb1={"a","b","c",[5]="f"}  -- 下标是1,2,3的数组, 可以指定下标设置值
+
+tb2 = {name="jack", ['age']=20} -- 下标是name, age的字典。
 
 tb2={"hello","world","jack",age="20"}
 print(tb2)
@@ -119,6 +127,31 @@ for k,v in pairs(tb2) do
     print(k .. "---" .. v)
 end
 
+--[[
+
+数组链接，把tb2的数组域部分进行链接，数组域部分：从1开始直到遇到nil或key-value字典为止，这之间的部分称为数组域
+table.concat(tb2)
+
+]]--
+print(table.concat(tb2))
+print(table.insert(tb2,2,"666"))
+print(table.remove(tb2))
+table.sort(tb2,function (a,b)
+    return a < b
+end)
+
+--[[
+
+table嵌套，模仿类
+
+]]--
+stu = {}
+class = {Class = 1, Grade = 1}
+stu.ClassInfo = class
+for key, value in pairs(stu) do
+    print(key ,value)
+end
+
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 -- thread 线程，在Lua里被称为协程，它和线程的区别是任意时刻只能有一个协程运行，当把它挂起(suspend)时才会暂停
@@ -127,5 +160,5 @@ end
 
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 -- userdata 用户自定义数据，由C/C++创建的一种数据结构，通常是struct和指针存储到lua变量中。
-
+-- 专门和lua宿主机打交道的，userdata可以将C数据存放在lua变量中，在lua中通常用作赋值和相等比较。
 

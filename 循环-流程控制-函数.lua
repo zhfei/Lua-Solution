@@ -1,9 +1,51 @@
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 -- 循环
 -- Lua有3种循环方式，while, for, repeat...until
--- break:结束当前循环，开始执行下一条指令。goto:跳到某一个标签指令的地方。
- 
- 
+-- break:结束当前循环，开始执行下一条指令。goto:跳到某一个标签指令的地方。return从函数返回一个结果，一个函数自然结束会有一个默认return
+--[[
+
+for 初始值, 小于值, 步长（每次加多少，可以省略，默认为1） do
+for i = 1, 10, 1 do
+end
+
+注意：for后三个表达式只会被计算一次，在循环开始前；局部变量只能在语句块内有效；在循环过程中不能修改局部变量i
+
+]]--
+
+
+for i = 1, 10, 1 do
+    print(i)
+end
+
+--[[
+
+范型for循环, ipairs(t)系统函数，对数组遍历，打印数组t的所有值，非数组部分不管，遇到挖坑的nil结束，ipairs()函数的返回值是多个个值
+for index, value in ipairs(t) do
+end
+
+注意：打印table中的每一对key,value
+
+]]--
+
+t={name="jack", age=20, "hello"}
+for index, value in ipairs(t) do
+    
+end
+
+--[[
+
+范型for循环, pairs(t)系统函数，对字典遍历，局部变量是key,value, pairs()函数的返回值是多个个值
+for key, value in pairs(t) do
+end
+
+注意：打印table中的每一对key,value
+
+]]--
+for key, value in pairs(t) do
+    
+end
+
+
 while false do
     print('hello,死循环')
 end
