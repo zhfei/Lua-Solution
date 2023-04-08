@@ -108,6 +108,7 @@ end)
 -- lua也是通过table来解决模块，包，对象的。
 -- table表数据存储在堆上，它是一个引用类型。
 -- table套table {'age',{}, 'name'}
+-- lua文件本身全局作用域也是一个table, 名字叫_G, 在lua中使用的tabel,其实是_G.table，在lua文件中定义的全局变量其实就是_G这个table中的key
 
 local tb = {}
 print(type(tb))
