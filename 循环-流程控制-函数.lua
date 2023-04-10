@@ -143,3 +143,86 @@ do  -- 局部作用域
     end
     foo(1,2,3,5)
 end
+
+
+-- 函数顶部return
+function foo(num1, num2)
+    do
+        print("直接返回")
+        return
+    end
+
+    res = num1 * num2
+    print(res)
+    
+end
+foo(33,22)
+
+-- -G文件模块的table
+function _G.foo2(a)
+    print('hello', a)
+end
+foo2('jack')
+
+-- 局部函数定义
+function foo3()
+    local method3 = function ()
+        print('method3')
+    end
+
+    function foo3Sub()
+        print('foo3Sub')
+    end
+end
+
+
+-- 库的定义
+LibA = {
+    foo = function ()
+        print("libA.foo")
+    end
+    ,
+    goo = function ()
+        print(LibA.goo)
+    end
+}
+print(LibA.goo)
+
+
+LibA2 = {Name="库LiaA2"}
+function LibA2.foo()
+    print("LibA2.foo")
+end
+
+LibA2.goo = function ()
+    print("LibA2.goo")
+end
+LibA2.foo()
+
+
+-- LibA2:foo2,使用:定义函数，函数会默认加一个self参数，这个self参数就是LiaA2这个table
+function LibA2:foo2()
+    print(self.Name)
+end
+LibA2:foo2()
+
+
+-- 词法定界：同级函数内部可以访问同级函数定义的局部变量， 它改变了局部变量i的生命周期，虽然作用域在AAA()函数的end处结束了，但因为有了闭包的使用，并把闭包返回出到外部的变量
+-- 它的生命周期得到了延续， 没调用一次AAA(),在堆空间就会产生一个全新的内存
+function AAA()
+    local i = 0
+    local a = "AAA.jack"
+    function BBB()
+        i = i + 1
+        print(a,i)
+    end
+    return BBB
+end
+
+bbb = AAA()
+bbb()
+bbb()
+
+bbb2 = AAA()
+bbb2()
+bbb2()
