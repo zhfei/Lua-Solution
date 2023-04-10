@@ -19,6 +19,8 @@
 
 ]]--
 
+-- do  end 表示作用域范围
+
 a="hello"
 print(a)
 a=20
